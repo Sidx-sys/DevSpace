@@ -9,6 +9,10 @@ const JobApplicantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        required: true
+    },
     institution: {
         type: Array,
         required: true
