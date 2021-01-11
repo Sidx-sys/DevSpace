@@ -1,3 +1,4 @@
 {
-    "MongoURI": "mongodb+srv://dbAdmin:test123@cluster0.egqw3.mongodb.net/portal?retryWrites=true&w=majority"
+    "MongoURI": "mongodb+srv://dbAdmin:test123@cluster0.egqw3.mongodb.net/portal?retryWrites=true&w=majority",
+    "jwtSecret": "letthesecret"
 }
