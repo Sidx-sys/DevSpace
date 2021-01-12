@@ -1,3 +1,5 @@
+const { SchemaType, SchemaTypes } = require("mongoose");
+
 mongoose = require("mongoose")
 
 const JobApplicantSchema = new mongoose.Schema({
@@ -7,31 +9,21 @@ const JobApplicantSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
     },
-    institution: {
+    academics: {
         type: Array,
-        required: true
-    },
-    start_year: {
-        type: Array,
-        required: true,
-    },
-    end_year: {
-        type: Array,
-        required: true
     },
     skills: {
         type: Array,
-        required: true
     },
     rating: {
-        type: Number,
-        default: 0
+        type: Array,
     }
 });
 

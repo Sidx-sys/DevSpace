@@ -14,16 +14,19 @@ const JobRecruiter = require("../../models/Job_Recruiters");
 router.post("/app", (req, res) => {
     const { email, password } = req.body;
 
+    if (!email || !password)
+        return res.status(400).json({ msg: "All fields are not filled" })
+
     JobApplicant.findOne({ email }).then((applicant) => {
         if (!applicant) {
-            return res.status(400);
+            return res.status(400).json({ msg: "Email not found" });
         }
 
         bcrypt.compare(password, applicant.password).then((isMatch) => {
             if (!isMatch)
                 return res
                     .status(400)
-                    .json({ password: "Invalid Email or Password", email: "" });
+                    .json({ msg: "Invalid Password" });
 
             jwt.sign(
                 { id: applicant._id },
@@ -39,9 +42,7 @@ router.post("/app", (req, res) => {
                             id: applicant._id,
                             name: applicant.name,
                             email: applicant.email,
-                            institution: applicant.institution,
-                            start_year: applicant.start_year,
-                            end_year: applicant.end_year,
+                            academics: applicant.academics,
                             skills: applicant.skills,
                             rating: applicant.rating
                         },
@@ -68,16 +69,19 @@ router.get("/app", auth, (req, res) => {
 router.post("/rec", (req, res) => {
     const { email, password } = req.body;
 
+    if (!email || !password)
+        return res.status(400).json({ msg: "All fields are not filled" })
+
     JobRecruiter.findOne({ email }).then((recruiter) => {
         if (!recruiter) {
-            return res.status(400);
+            return res.status(400).json({ msg: "Email not found" });
         }
 
         bcrypt.compare(password, recruiter.password).then((isMatch) => {
             if (!isMatch)
                 return res
                     .status(400)
-                    .json({ password: "Invalid Email or Password", email: "" });
+                    .json({ msg: "Invalid Password" });
 
             jwt.sign(
                 { id: recruiter._id },
@@ -94,7 +98,8 @@ router.post("/rec", (req, res) => {
                             name: recruiter.name,
                             email: recruiter.email,
                             contact: recruiter.contact,
-                            bio: recruiter.bio
+                            bio: recruiter.bio,
+                            rating: recruiter.rating
                         },
                     });
                 }

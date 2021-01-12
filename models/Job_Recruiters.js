@@ -15,11 +15,12 @@ const JobRecruiterSchema = new mongoose.Schema({
     },
     contact: {
         type: String,
-        required: true
     },
     bio: {
         type: String,
-        required: true
+    },
+    rating: {
+        type: Array,
     }
 })
 

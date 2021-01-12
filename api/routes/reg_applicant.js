@@ -11,21 +11,23 @@ const JobRecruiter = require("../../models/Job_Recruiters");
 // @desc Register a new Applicant
 // @access public
 router.post("/app", (req, res) => {
-    const { name, email, password, institution, start_year, end_year, skills } = req.body;
+    const { name, email, password, password2 } = req.body;
+
+    if (!email || !name || !password || !password2)
+        return res.status(400).json({ msg: "All fields are not filled" })
+    if (password.length < 5)
+        return res.status(400).json({ msg: "Password length has to be greater than 5 characters" })
+    if (password !== password2)
+        return res.status(400).json({ msg: "Confirmed password doesn't match" })
 
     JobApplicant.findOne({ email }).then((applicant) => {
         if (applicant) {
-
-            return res.status(400);
+            return res.status(400).json({ msg: "User already exists" });
         }
         const newApplicant = new JobApplicant({
             name,
             email,
             password,
-            institution,
-            start_year,
-            end_year,
-            skills
         });
 
         bcrypt.genSalt(10, (err, salt) => {
@@ -47,9 +49,7 @@ router.post("/app", (req, res) => {
                                     id: applicant._id,
                                     name: applicant.name,
                                     email: applicant.email,
-                                    institution: applicant.institution,
-                                    start_year: applicant.start_year,
-                                    end_year: applicant.end_year,
+                                    academics: applicant.academics,
                                     skills: applicant.skills,
                                     rating: applicant.rating
                                 },
@@ -66,18 +66,26 @@ router.post("/app", (req, res) => {
 // @desc Register a new Recruiter
 // @access public
 router.post("/rec", (req, res) => {
-    const { name, email, password, contact, bio } = req.body;
+    const { name, email, password, password2, contact } = req.body;
+
+    if (!email || !name || !password || !password2 || contact)
+        return res.status(400).json({ msg: "All fields are not filled" })
+    if (password.length < 5)
+        return res.status(400).json({ msg: "Password length has to be greater than 5 characters" })
+    if (password !== password2)
+        return res.status(400).json({ msg: "Confirmed password doesn't match" })
+    if (contact.length !== 10)
+        return res.status(400).json({ msg: "Invalid contact number" })
 
     JobRecruiter.findOne({ email }).then((recruiter) => {
         if (recruiter) {
-            return res.status(400);
+            return res.status(400).json({ msg: "User already present" });
         }
         const newRecruiter = new JobRecruiter({
             name,
             email,
             password,
-            contact,
-            bio
+            contact
         });
 
         bcrypt.genSalt(10, (err, salt) => {
@@ -100,7 +108,8 @@ router.post("/rec", (req, res) => {
                                     name: recruiter.name,
                                     email: recruiter.email,
                                     contact: recruiter.contact,
-                                    bio: recruiter.bio
+                                    bio: recruiter.bio,
+                                    rating: recruiter.rating
                                 },
                             });
                         }
