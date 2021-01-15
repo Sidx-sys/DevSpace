@@ -1,20 +1,18 @@
-const { SchemaType, SchemaTypes } = require("mongoose");
-
-mongoose = require("mongoose")
+mongoose = require("mongoose");
 
 const JobApplicantSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     academics: {
         type: Array,
@@ -24,7 +22,14 @@ const JobApplicantSchema = new mongoose.Schema({
     },
     rating: {
         type: Array,
-    }
+    },
+    type: {
+        type: String,
+        default: "applicant",
+    },
 });
 
-module.exports = JobApplicant = mongoose.model("job_applicant", JobApplicantSchema);
+module.exports = JobApplicant = mongoose.model(
+    "job_applicant",
+    JobApplicantSchema
+);

@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const config = require("config");
 const cors = require("cors");
 
-const register = require("./api/routes/reg_applicant")
-const login = require("./api/routes/login_applicant")
+const register = require("./api/routes/register");
+const login = require("./api/routes/login");
 
 const app = express();
 app.use(express.json());
@@ -20,10 +20,10 @@ mongoose
         useFindAndModify: false,
     })
     .then(() => console.log("MongoDB Connected Successfully!"))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 
-app.use("/api/register", register)
-app.use("/api/login", login)
+app.use("/api/register", register);
+app.use("/api/login", login);
 
 const port = process.env.PORT || 5000;
 

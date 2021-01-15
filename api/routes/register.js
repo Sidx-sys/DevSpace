@@ -65,6 +65,7 @@ router.post("/app", (req, res) => {
                                         academics: applicant.academics,
                                         skills: applicant.skills,
                                         rating: applicant.rating,
+                                        type: applicant.type,
                                     },
                                 });
                             }
@@ -134,6 +135,7 @@ router.post("/rec", (req, res) => {
                                         contact: recruiter.contact,
                                         bio: recruiter.bio,
                                         rating: recruiter.rating,
+                                        type: recruiter.type,
                                     },
                                 });
                             }

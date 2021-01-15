@@ -1,17 +1,17 @@
-mongoose = require("mongoose")
+mongoose = require("mongoose");
 
 const JobRecruiterSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
-        required: true
+        required: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     contact: {
         type: String,
@@ -21,7 +21,14 @@ const JobRecruiterSchema = new mongoose.Schema({
     },
     rating: {
         type: Array,
-    }
-})
+    },
+    type: {
+        type: String,
+        default: "recruiter",
+    },
+});
 
-module.exports = JobRecruiter = mongoose.model("job_recruiter", JobRecruiterSchema);
+module.exports = JobRecruiter = mongoose.model(
+    "job_recruiter",
+    JobRecruiterSchema
+);

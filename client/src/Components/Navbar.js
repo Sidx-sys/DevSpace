@@ -1,31 +1,110 @@
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import UserContext from "../Context/UserContext";
 
-const Navbar = () => ({
-    render() {
-        return (
-            <div>
-                <nav class="navbar navbar-expand-lg navbar-light" style={{ "background-color": "#e3f2fd" }}>
-                    <i class="fas fa-laptop-code"></i>&nbsp;
-                <NavLink className="navbar-brand" to="/">DevSpace
-                    </NavLink>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+const Navbar = () => {
+    const { userData, setUserData } = useContext(UserContext);
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
+    const logout = () => {
+        setUserData({
+            token: undefined,
+            user: undefined,
+        });
+        localStorage.setItem("auth-token", "");
+    };
+
+    return (
+        <div>
+            <nav
+                className="navbar navbar-expand-lg navbar-light"
+                style={{ backgroundColor: "#e3f2fd" }}
+            >
+                <i className="fas fa-laptop-code"></i>&nbsp;
+                <NavLink className="navbar-brand" to="/">
+                    DevSpace
+                </NavLink>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarSupportedContent"
+                >
+                    {!userData.user ? (
+                        <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <NavLink className="nav-link" to="/">Home <span className="sr-only">(current)</span></NavLink>
+                                <NavLink className="nav-link" to="/">
+                                    Home{" "}
+                                    <span className="sr-only">(current)</span>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/about">About</NavLink>
+                                <NavLink className="nav-link" to="/about">
+                                    About
+                                </NavLink>
                             </li>
                         </ul>
-                    </div>
-                </nav>
-            </div >
-        );
-    }
-})
+                    ) : userData.user.type === "applicant" ? (
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item active">
+                                <NavLink className="nav-link" to="/">
+                                    My Profile{" "}
+                                    <span className="sr-only">(current)</span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/">
+                                    Job Listings
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/">
+                                    My Applications
+                                </NavLink>
+                            </li>
+                            <li className="nav-item" onClick={logout}>
+                                <NavLink className="nav-link" to="/">
+                                    Logout
+                                </NavLink>
+                            </li>
+                        </ul>
+                    ) : (
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item active">
+                                <NavLink className="nav-link" to="/">
+                                    My Profile{" "}
+                                    <span className="sr-only">(current)</span>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/">
+                                    Create Job
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/">
+                                    Recruits
+                                </NavLink>
+                            </li>
+                            <li className="nav-item" onClick={logout}>
+                                <NavLink className="nav-link" to="/">
+                                    Logout
+                                </NavLink>
+                            </li>
+                        </ul>
+                    )}
+                </div>
+            </nav>
+        </div>
+    );
+};
 
 export default Navbar;
