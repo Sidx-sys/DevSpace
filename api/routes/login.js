@@ -120,6 +120,7 @@ router.post("/tokenIsValid", (req, res) => {
                 return res.json(true);
             });
         }
+        return res.json(true);
     });
 });
 
