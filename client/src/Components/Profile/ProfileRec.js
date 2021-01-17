@@ -7,7 +7,7 @@ const ProfileRec = () => {
     return (
         <div className="container">
             <h1 className="display-4">{userData.user.name}</h1>
-            <small class="text-muted">
+            <small className="text-muted">
                 <strong>@</strong>
                 {userData.user.email}
             </small>

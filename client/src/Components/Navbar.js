@@ -19,9 +19,8 @@ const Navbar = () => {
                 className="navbar navbar-expand-lg navbar-light"
                 style={{ backgroundColor: "#e3f2fd" }}
             >
-                <i className="fas fa-laptop-code"></i>&nbsp;
                 <NavLink className="navbar-brand" to="/">
-                    DevSpace
+                    <i className="fas fa-laptop-code"></i>&nbsp; DevSpace
                 </NavLink>
                 <button
                     className="navbar-toggler"
@@ -55,7 +54,7 @@ const Navbar = () => {
                     ) : userData.user.type === "applicant" ? (
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <NavLink className="nav-link" to="/">
+                                <NavLink className="nav-link" to="/profile">
                                     My Profile{" "}
                                     <span className="sr-only">(current)</span>
                                 </NavLink>
@@ -79,7 +78,7 @@ const Navbar = () => {
                     ) : (
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <NavLink className="nav-link" to="/">
+                                <NavLink className="nav-link" to="/profile">
                                     My Profile{" "}
                                     <span className="sr-only">(current)</span>
                                 </NavLink>

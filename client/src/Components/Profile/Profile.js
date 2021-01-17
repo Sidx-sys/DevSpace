@@ -6,9 +6,7 @@ import ProfileRec from "./ProfileRec";
 import PreLoader from "../PreLoader";
 
 const Profile = () => {
-    const [isLoading, setIsLoading] = useState({
-        loading: true,
-    });
+    const [isLoading, setIsLoading] = useState(true);
 
     const { userData } = useContext(UserContext);
     let history = useHistory();
@@ -20,14 +18,11 @@ const Profile = () => {
         };
 
         unAuthorized();
-    });
+    }, []);
 
     useEffect(() => {
         const userLoaded = () => {
-            if (userData.user !== null)
-                setIsLoading({
-                    loading: false,
-                });
+            if (userData.user !== null) setIsLoading(false);
         };
 
         userLoaded();
@@ -35,7 +30,7 @@ const Profile = () => {
 
     return (
         <>
-            {isLoading.loading ? (
+            {isLoading ? (
                 <PreLoader />
             ) : userData.user.type === "applicant" ? (
                 <ProfileApp />
