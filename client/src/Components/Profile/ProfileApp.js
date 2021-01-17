@@ -5,17 +5,24 @@ import EducationDisplay from "./EducationDisplay";
 const ProfileApp = () => {
     const { userData, setUserData } = useContext(UserContext);
 
-    const [editSkills, setEditSkills] = useState(false);
+    const [toEditSkills, setToEditSkills] = useState(false);
+    const [skills, editSkills] = useState(userData.user.skills);
+    const [skillList, editSkillList] = useState([
+        "C",
+        "Python",
+        "R",
+        "Javascript",
+        "Flutter",
+        "Bash",
+    ]);
+
     const [editName, setEditName] = useState(false);
     const [editEmail, setEditEmail] = useState(false);
-    const [user, setUser] = useState({
-        ...userData.user,
-    });
 
     return (
         <div className="container">
-            <h1 className="display-4">{user.name}</h1>
-            <p className="lead">{user.email}</p>
+            <h1 className="display-4">{userData.user.name}</h1>
+            <p className="lead">{userData.user.email}</p>
 
             <hr />
 
@@ -26,7 +33,7 @@ const ProfileApp = () => {
 
                 <div className="col-4 border-bottom">
                     <p className="h4">Rating</p>
-                    {user.rating.length ? (
+                    {userData.user.rating.length ? (
                         <div></div>
                     ) : (
                         <p className="lead">Not rated yet</p>
@@ -37,42 +44,201 @@ const ProfileApp = () => {
             <div className="row mt-4">
                 <div className="col-8 border-right border-bottom">
                     <p className="h4">Skills</p>
-                    {user.skills.length ? (
-                        <div></div>
+                    {toEditSkills ? (
+                        <div>
+                            {skills.length ? (
+                                <div>
+                                    {skills.map((skill) => {
+                                        return (
+                                            <a
+                                                className="badge badge-primary mr-2"
+                                                href="#"
+                                                onClick={(e) => {
+                                                    editSkillList([
+                                                        ...skillList,
+                                                        e.target.innerText,
+                                                    ]);
+
+                                                    const newSkills = skills.filter(
+                                                        (skl) =>
+                                                            skl !==
+                                                            e.target.innerText
+                                                    );
+                                                    editSkills(newSkills);
+                                                }}
+                                            >
+                                                {skill}
+                                            </a>
+                                        );
+                                    })}
+                                    <p className="text-center">
+                                        (Click on above skills to remove)
+                                    </p>
+                                </div>
+                            ) : (
+                                <p className="lead">Add Skills</p>
+                            )}
+                            {skillList.map((skill) => {
+                                return (
+                                    <a
+                                        href="#"
+                                        className="badge badge-primary mr-2"
+                                        value
+                                        onClick={(e) => {
+                                            const newSkillList = skillList.filter(
+                                                (skl) =>
+                                                    skl !== e.target.innerText
+                                            );
+                                            editSkillList(newSkillList);
+
+                                            const newSkills = [
+                                                ...skills,
+                                                e.target.innerText,
+                                            ];
+                                            editSkills(newSkills);
+                                        }}
+                                    >
+                                        {skill}
+                                    </a>
+                                );
+                            })}
+                            <button
+                                type="button"
+                                href="#"
+                                className="btn btn-sm btn-outline-success mb-2"
+                                onClick={() => {
+                                    setUserData({
+                                        ...userData,
+                                        user: {
+                                            ...userData.user,
+                                            skills,
+                                        },
+                                    });
+                                    setToEditSkills(false);
+                                }}
+                            >
+                                Done
+                            </button>
+                        </div>
                     ) : (
-                        <p className="lead">None filled currently</p>
+                        <div>
+                            {skills.length ? (
+                                <div>
+                                    {skills.map((skill) => {
+                                        return (
+                                            <a
+                                                className="badge badge-primary mr-2"
+                                                href="#"
+                                            >
+                                                {skill}
+                                            </a>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <p className="lead">None filled currently</p>
+                            )}
+                            <button
+                                type="button"
+                                className="btn btn-sm btn-outline-primary mb-2 mt-2"
+                                onClick={() => {
+                                    setToEditSkills(true);
+                                }}
+                            >
+                                Edit
+                            </button>
+                        </div>
                     )}
-                    <button
-                        type="button"
-                        className="btn btn-sm btn-outline-primary mb-2"
-                        onClick={() => {
-                            setEditSkills(true);
-                        }}
-                    >
-                        Edit
-                    </button>
                 </div>
 
                 <div className="col-4">
-                    <button
-                        type="button"
-                        className="btn btn-sm btn-outline-primary mb-3"
-                        onClick={() => {
-                            setEditName(true);
-                        }}
-                    >
-                        Edit Name
-                    </button>
+                    {editName ? (
+                        <form className="form-inline">
+                            <input
+                                type="text"
+                                value={userData.user.name}
+                                required
+                                className="form-control mb-2 mr-sm-2"
+                                onChange={(e) => {
+                                    const name = e.target.value;
+                                    setUserData({
+                                        ...userData,
+                                        user: {
+                                            ...userData.user,
+                                            name,
+                                        },
+                                    });
+                                }}
+                            />
+                            <button
+                                type="submit"
+                                className="btn btn-outline-success mb-2"
+                                onClick={() => {
+                                    setEditName(false);
+                                }}
+                            >
+                                Done
+                            </button>
+                        </form>
+                    ) : (
+                        <>
+                            <button
+                                type="button"
+                                className="btn btn-sm btn-outline-primary mb-3"
+                                onClick={() => {
+                                    setEditName(true);
+                                }}
+                            >
+                                Edit Name
+                            </button>{" "}
+                        </>
+                    )}
+
                     <br />
-                    <button
-                        type="button"
-                        className="btn btn-sm btn-outline-primary"
-                        onClick={() => {
-                            setEditEmail(true);
-                        }}
-                    >
-                        Edit Email
-                    </button>
+
+                    {editEmail ? (
+                        <form className="form-inline">
+                            <div className="form-group">
+                                <input
+                                    type="email"
+                                    value={userData.user.email}
+                                    className="form-control mb-2 mr-sm-2"
+                                    required
+                                    onChange={(e) => {
+                                        const email = e.target.value;
+                                        setUserData({
+                                            ...userData,
+                                            user: {
+                                                ...userData.user,
+                                                email,
+                                            },
+                                        });
+                                    }}
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="btn btn-outline-success mb-2"
+                                onClick={() => {
+                                    setEditEmail(false);
+                                }}
+                            >
+                                Done
+                            </button>
+                        </form>
+                    ) : (
+                        <>
+                            <button
+                                type="button"
+                                className="btn btn-sm btn-outline-primary"
+                                onClick={() => {
+                                    setEditEmail(true);
+                                }}
+                            >
+                                Edit Email
+                            </button>{" "}
+                        </>
+                    )}
                 </div>
             </div>
         </div>
