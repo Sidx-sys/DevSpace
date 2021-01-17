@@ -28,6 +28,7 @@ const RegisterRec = () => {
             setUserData({
                 token: registerRes.data.token,
                 user: registerRes.data.Recruiter,
+                isLoading: false,
             });
             localStorage.setItem("auth-token", registerRes.data.token);
 

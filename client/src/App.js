@@ -14,6 +14,7 @@ const App = () => {
     const [userData, setUserData] = useState({
         token: undefined,
         user: undefined,
+        isLoading: true,
     });
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const App = () => {
                 setUserData({
                     token,
                     user: userRes.data,
+                    isLoading: false,
                 });
             }
         };

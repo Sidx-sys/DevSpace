@@ -92,11 +92,30 @@ router.get("/", auth, (req, res) => {
     JobApplicant.findById(req.user.id)
         .select("-password")
         .then((user) => {
-            if (user) res.json(user);
+            if (user)
+                res.json({
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    academics: user.academics,
+                    skills: user.skills,
+                    rating: user.rating,
+                    type: user.type,
+                });
             else {
                 JobRecruiter.findById(req.user.id)
                     .select("-password")
-                    .then((user) => res.json(user));
+                    .then((user) =>
+                        res.json({
+                            id: user._id,
+                            name: user.name,
+                            email: user.email,
+                            contact: user.contact,
+                            bio: user.bio,
+                            rating: user.rating,
+                            type: user.type,
+                        })
+                    );
             }
         });
 });

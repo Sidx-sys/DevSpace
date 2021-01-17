@@ -28,6 +28,7 @@ const RegisterApp = () => {
             setUserData({
                 token: registerApp.data.token,
                 user: registerApp.data.applicant,
+                isLoading: false,
             });
             localStorage.setItem("auth-token", registerApp.data.token);
 
