@@ -82,8 +82,9 @@ router.post("/app", (req, res) => {
 // @access public
 router.post("/rec", (req, res) => {
     const { name, email, password, password2, contact } = req.body;
+    console.log(req.body);
 
-    if (!email || !name || !password || !password2 || contact)
+    if (!email || !name || !password || !password2 || !contact)
         return res.status(400).json({ msg: "All fields are not filled" });
     if (password.length < 5)
         return res.status(400).json({

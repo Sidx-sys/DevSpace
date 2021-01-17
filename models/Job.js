@@ -1,53 +1,51 @@
+const { SchemaType, SchemaTypes } = require("mongoose");
+
 mongoose = require("mongoose");
 
 const JobSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
     },
-    recruiter_name: {
-        type: String,
-        required: true
-    },
-    recruiter_email: {
-        type: String,
-        required: true
+    recruiter_id: {
+        type: SchemaTypes.ObjectId,
+        required: true,
     },
     app_limit: {
         type: Number,
-        required: true
+        required: true,
     },
     job_limit: {
         type: Number,
-        required: true
+        required: true,
     },
     posting_date: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     deadline_date: {
         type: Date,
-        required: true
+        required: true,
     },
     skills_required: {
         type: Array,
-        required: true
+        required: true,
     },
     job_type: {
         type: string,
-        required: true
+        required: true,
     },
     Duration: {
         type: Number,
-        default: 0
+        default: 0,
     },
     spm: {
         type: Number,
-        required: true
+        required: true,
     },
     rating: {
-        type: Number
-    }
-})
+        type: Number,
+    },
+});
 
 module.exports = Job = mongoose.model("job", JobSchema);
