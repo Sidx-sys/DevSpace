@@ -84,7 +84,7 @@ const Navbar = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/">
+                                <NavLink className="nav-link" to="/createJob">
                                     Create Job
                                 </NavLink>
                             </li>

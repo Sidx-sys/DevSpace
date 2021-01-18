@@ -1,4 +1,4 @@
-const { SchemaType, SchemaTypes } = require("mongoose");
+const { SchemaTypes } = require("mongoose");
 
 mongoose = require("mongoose");
 
@@ -20,11 +20,10 @@ const JobSchema = new mongoose.Schema({
         required: true,
     },
     posting_date: {
-        type: Date,
-        default: Date.now,
+        type: String,
     },
     deadline_date: {
-        type: Date,
+        type: String,
         required: true,
     },
     skills_required: {
@@ -32,7 +31,7 @@ const JobSchema = new mongoose.Schema({
         required: true,
     },
     job_type: {
-        type: string,
+        type: String,
         required: true,
     },
     Duration: {
@@ -43,8 +42,16 @@ const JobSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    applied: {
+        type: Array,
+    },
+    status: {
+        type: String,
+        default: "empty",
+    },
     rating: {
-        type: Number,
+        type: Array,
+        default: [],
     },
 });
 

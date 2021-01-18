@@ -6,6 +6,7 @@ const cors = require("cors");
 const register = require("./api/routes/register");
 const login = require("./api/routes/login");
 const userProfile = require("./api/routes/userProfile");
+const jobRoute = require("./api/routes/jobRoute");
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,7 @@ mongoose
 app.use("/api/register", register);
 app.use("/api/login", login);
 app.use("/api/profile", userProfile);
+app.use("/api/job", jobRoute);
 
 const port = process.env.PORT || 5000;
 

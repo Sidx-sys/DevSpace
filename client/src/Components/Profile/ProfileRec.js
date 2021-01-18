@@ -4,9 +4,9 @@ import Axios from "axios";
 
 const ProfileRec = () => {
     const { userData, setUserData } = useContext(UserContext);
+    const [error, setError] = useState();
 
     const [editName, setEditName] = useState(false);
-    const [editEmail, setEditEmail] = useState(false);
     const [editContact, setEditContact] = useState(false);
     const [editBio, setEditBio] = useState(false);
 
@@ -25,6 +25,13 @@ const ProfileRec = () => {
 
     return (
         <div className="container">
+            {error ? (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            ) : (
+                <> </>
+            )}
             <h1 className="display-4">{userData.user.name}</h1>
             <p className="lead">{userData.user.email}</p>
 
@@ -42,13 +49,21 @@ const ProfileRec = () => {
                                 value={userData.user.bio}
                                 onChange={(e) => {
                                     const bio = e.target.value;
-                                    setUserData({
-                                        ...userData,
-                                        user: {
-                                            ...userData.user,
-                                            bio,
-                                        },
-                                    });
+                                    const bioLength = bio.split(" ").length;
+                                    if (bioLength <= 250) {
+                                        setError(null);
+                                        setUserData({
+                                            ...userData,
+                                            user: {
+                                                ...userData.user,
+                                                bio,
+                                            },
+                                        });
+                                    } else {
+                                        setError(
+                                            "Bio exceeded word limit of 250"
+                                        );
+                                    }
                                 }}
                             ></textarea>
                             <button
@@ -187,50 +202,6 @@ const ProfileRec = () => {
                     )}
 
                     <br />
-
-                    {editEmail ? (
-                        <form className="form-inline">
-                            <div className="form-group">
-                                <input
-                                    type="email"
-                                    value={userData.user.email}
-                                    className="form-control mb-2 mr-sm-2"
-                                    required
-                                    onChange={(e) => {
-                                        const email = e.target.value;
-                                        setUserData({
-                                            ...userData,
-                                            user: {
-                                                ...userData.user,
-                                                email,
-                                            },
-                                        });
-                                    }}
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="btn btn-outline-success mb-2"
-                                onClick={() => {
-                                    setEditEmail(false);
-                                }}
-                            >
-                                Done
-                            </button>
-                        </form>
-                    ) : (
-                        <>
-                            <button
-                                type="button"
-                                className="btn btn-sm btn-outline-primary"
-                                onClick={() => {
-                                    setEditEmail(true);
-                                }}
-                            >
-                                Edit Email
-                            </button>{" "}
-                        </>
-                    )}
                 </div>
             </div>
         </div>

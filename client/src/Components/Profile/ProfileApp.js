@@ -17,7 +17,6 @@ const ProfileApp = () => {
     ]);
 
     const [editName, setEditName] = useState(false);
-    const [editEmail, setEditEmail] = useState(false);
 
     return (
         <div className="container">
@@ -195,50 +194,6 @@ const ProfileApp = () => {
                     )}
 
                     <br />
-
-                    {editEmail ? (
-                        <form className="form-inline">
-                            <div className="form-group">
-                                <input
-                                    type="email"
-                                    value={userData.user.email}
-                                    className="form-control mb-2 mr-sm-2"
-                                    required
-                                    onChange={(e) => {
-                                        const email = e.target.value;
-                                        setUserData({
-                                            ...userData,
-                                            user: {
-                                                ...userData.user,
-                                                email,
-                                            },
-                                        });
-                                    }}
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="btn btn-outline-success mb-2"
-                                onClick={() => {
-                                    setEditEmail(false);
-                                }}
-                            >
-                                Done
-                            </button>
-                        </form>
-                    ) : (
-                        <>
-                            <button
-                                type="button"
-                                className="btn btn-sm btn-outline-primary"
-                                onClick={() => {
-                                    setEditEmail(true);
-                                }}
-                            >
-                                Edit Email
-                            </button>{" "}
-                        </>
-                    )}
                 </div>
             </div>
         </div>

@@ -27,6 +27,10 @@ const JobApplicantSchema = new mongoose.Schema({
         type: String,
         default: "applicant",
     },
+    selected: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 module.exports = JobApplicant = mongoose.model(
