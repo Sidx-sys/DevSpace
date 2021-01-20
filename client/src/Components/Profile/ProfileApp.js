@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { generate } from "shortid";
 import UserContext from "../../Context/UserContext";
 import EducationDisplay from "./EducationDisplay";
 
@@ -50,6 +51,7 @@ const ProfileApp = () => {
                                     {skills.map((skill) => {
                                         return (
                                             <a
+                                                key={generate()}
                                                 className="badge badge-primary mr-2"
                                                 href="#"
                                                 onClick={(e) => {
@@ -80,6 +82,7 @@ const ProfileApp = () => {
                             {skillList.map((skill) => {
                                 return (
                                     <a
+                                        key={generate()}
                                         href="#"
                                         className="badge badge-primary mr-2"
                                         value
@@ -128,6 +131,7 @@ const ProfileApp = () => {
                                             <a
                                                 className="badge badge-primary mr-2"
                                                 href="#"
+                                                key={generate()}
                                             >
                                                 {skill}
                                             </a>

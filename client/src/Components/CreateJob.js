@@ -47,6 +47,7 @@ const CreateJob = () => {
             const newJob = {
                 title,
                 recruiter_id: userData.user.id,
+                recruiter_name: userData.user.name,
                 app_limit: appLimit,
                 job_limit: jobLimit,
                 posting_date: moment().format("DD-MM-YYYY"),
@@ -212,7 +213,7 @@ const CreateJob = () => {
                 <div className="form-group">
                     <label htmlFor="jobType">Job Type</label>
                     <select
-                        class="form-control"
+                        className="form-control"
                         id="jobType"
                         onChange={(e) => setJobType(e.target.value)}
                     >
@@ -238,7 +239,7 @@ const CreateJob = () => {
                         <option>5</option>
                         <option>6</option>
                     </select>
-                    <small id="emailHelp" class="form-text text-muted">
+                    <small id="emailHelp" className="form-text text-muted">
                         Default 0 duration means indefinite.
                     </small>
                 </div>

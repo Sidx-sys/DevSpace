@@ -27,4 +27,10 @@ router.post("/", auth, (req, res) => {
         });
 });
 
+router.get("/", auth, (req, res) => {
+    Job.find()
+        .then((jobs) => res.json(jobs))
+        .catch((err) => res.status(404).json(err));
+});
+
 module.exports = router;

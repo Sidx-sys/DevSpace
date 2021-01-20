@@ -1,11 +1,38 @@
-const { Schema } = require("mongoose")
+const { Schema } = require("mongoose");
 
-mongoose = require("mongoose")
+mongoose = require("mongoose");
 
 const ApplicationSchema = new mongoose.Schema({
     job_id: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
     },
+    applicant_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    applicant_name: {
+        type: "String",
+    },
+    recruiter_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    date_of_app: {
+        type: String,
+        required: true,
+    },
+    sop: {
+        type: String,
+        required: true,
+    },
+    stage: {
+        type: String,
+        default: "applied",
+    },
+});
 
-})
+module.exports = Application = mongoose.model(
+    "applications",
+    ApplicationSchema
+);

@@ -31,6 +31,10 @@ const JobApplicantSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    applied_to: {
+        type: Number,
+        default: 0,
+    },
 });
 
 module.exports = JobApplicant = mongoose.model(

@@ -11,6 +11,9 @@ const JobSchema = new mongoose.Schema({
         type: SchemaTypes.ObjectId,
         required: true,
     },
+    recruiter_name: {
+        type: String,
+    },
     app_limit: {
         type: Number,
         required: true,
@@ -34,7 +37,7 @@ const JobSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    Duration: {
+    duration: {
         type: Number,
         default: 0,
     },
@@ -44,6 +47,7 @@ const JobSchema = new mongoose.Schema({
     },
     applied: {
         type: Array,
+        default: [],
     },
     status: {
         type: String,
@@ -51,7 +55,7 @@ const JobSchema = new mongoose.Schema({
     },
     rating: {
         type: Array,
-        default: [],
+        default: [0],
     },
 });
 
