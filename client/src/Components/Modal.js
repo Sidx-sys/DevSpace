@@ -37,7 +37,7 @@ const ModalExample = (props) => {
             onChange={(e) => {
               const text = e.target.value;
               const sopLength = text.split(" ").length;
-              if (sopLength <= 5) {
+              if (sopLength <= 5 || text.length === 0) {
                 setError("You have to write atleast 5 words");
               } else if (sopLength > 250) {
                 setError("SOP exceeded word limit of 250");

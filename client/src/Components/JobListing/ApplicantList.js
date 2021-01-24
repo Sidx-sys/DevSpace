@@ -109,6 +109,10 @@ const ApplicantList = () => {
 
   const applyJob = (job_id, recruiter_id) => {
     const job = jobs.filter((job) => job._id === job_id)[0];
+
+    let tempJob = job;
+    tempJob.applied.push(userData.user.id);
+
     const token = localStorage.getItem("auth-token");
 
     const application = {
@@ -314,7 +318,7 @@ const ApplicantList = () => {
                     </div>
 
                     <div className="col-3">
-                      {job.applied.includes("userData.user.id") ? (
+                      {job.applied.includes(userData.user?.id) ? (
                         <button
                           type="button"
                           className="btn btn-success"

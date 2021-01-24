@@ -11,67 +11,66 @@ import Profile from "./Components/Profile/Profile";
 import UserContext from "./Context/UserContext";
 import CreateJob from "./Components/CreateJob";
 import ApplicantList from "./Components/JobListing/ApplicantList";
+import RecruiterList from "./Components/JobListing/RecruiterList";
 
 const App = () => {
-    const [userData, setUserData] = useState({
-        token: undefined,
-        user: undefined,
-        isLoading: true,
-    });
+  const [userData, setUserData] = useState({
+    token: undefined,
+    user: undefined,
+    isLoading: true,
+  });
 
-    useEffect(() => {
-        const checkLoggedIn = async () => {
-            let token = localStorage.getItem("auth-token");
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
 
-            if (token === null) {
-                localStorage.setItem("auth-token", "");
-                token = "";
-            }
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
 
-            const tokenRes = await Axios.post(
-                "http://localhost:5000/api/login/tokenIsValid",
-                null,
-                {
-                    headers: { "x-auth-token": token },
-                }
-            );
+      const tokenRes = await Axios.post(
+        "http://localhost:5000/api/login/tokenIsValid",
+        null,
+        {
+          headers: { "x-auth-token": token },
+        }
+      );
 
-            if (tokenRes.data) {
-                const userRes = await Axios.get(
-                    "http://localhost:5000/api/login",
-                    {
-                        headers: { "x-auth-token": token },
-                    }
-                );
+      if (tokenRes.data) {
+        const userRes = await Axios.get("http://localhost:5000/api/login", {
+          headers: { "x-auth-token": token },
+        });
 
-                setUserData({
-                    token,
-                    user: userRes.data,
-                    isLoading: false,
-                });
-            }
-        };
+        setUserData({
+          token,
+          user: userRes.data,
+          isLoading: false,
+        });
+      }
+    };
 
-        checkLoggedIn();
-    }, []);
+    checkLoggedIn();
+  }, []);
 
-    return (
-        <div className="App">
-            <BrowserRouter>
-                <UserContext.Provider value={{ userData, setUserData }}>
-                    <Navbar />
-                    <div className="container">
-                        <Route exact path="/" component={LandingPage} />
-                        <Route path="/about" component={AboutPage} />
-                        <Route path="/register" component={Register} />
-                        <Route path="/profile" component={Profile} />
-                        <Route path="/createJob" component={CreateJob} />
-                        <Route path="/app/jobList" component={ApplicantList} />
-                    </div>
-                </UserContext.Provider>
-            </BrowserRouter>
-        </div>
-    );
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <UserContext.Provider value={{ userData, setUserData }}>
+          <Navbar />
+          <div className="container">
+            <Route exact path="/" component={LandingPage} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/register" component={Register} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/createJob" component={CreateJob} />
+            <Route path="/app/jobList" component={ApplicantList} />
+            <Route path="/rec/jobList" component={RecruiterList} />
+          </div>
+        </UserContext.Provider>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default App;
