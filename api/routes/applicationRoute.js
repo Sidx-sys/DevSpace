@@ -5,7 +5,6 @@ const auth = require("../../middleware/auth");
 const Application = require("../../models/Application");
 const JobApplicant = require("../../models/Job_Applicants");
 const Job = require("../../models/Job");
-const { application } = require("express");
 
 // @route api/application
 // @desc add an application
@@ -105,6 +104,85 @@ router.put("/shortlist/:id", auth, async (req, res) => {
     { _id },
     {
       $set: { stage: "Shortlisted" },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  res.json(true);
+});
+
+// @route PUT api/application/accept/:id
+// @desc Update the application stage to accepted,
+// @access private
+router.put("/accept", auth, async (req, res) => {
+  const application = req.body;
+  const _id = application._id;
+
+  await Application.findOneAndUpdate(
+    { _id },
+    {
+      $set: { stage: "Accepted" },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  const job_id = application.job_id;
+  const applicant_id = application.applicant_id;
+
+  await JobApplicant.findOneAndUpdate(
+    { _id: applicant_id },
+    {
+      $set: { got_job: job_id },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  const job = await Job.findById(job_id).catch((err) =>
+    res.status(404).json(err)
+  );
+  let newSelected = job.selected;
+  newSelected.push(applicant_id);
+
+  await Job.findOneAndUpdate(
+    { _id: job_id },
+    {
+      $set: { selected: newSelected },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  res.json(true);
+});
+
+// @route PUT api/application/reject
+// @desc Update the application stage to rejected,
+// @access private
+router.put("/reject", auth, async (req, res) => {
+  const application = req.body;
+
+  await Application.findOneAndUpdate(
+    { _id: application._id },
+    {
+      $set: { stage: "Rejected" },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  const applicant = await JobApplicant.findOne({
+    _id: application.applicant_id,
+  });
+  await JobApplicant.findOneAndUpdate(
+    { _id: application.applicant_id },
+    {
+      $set: { applied_to: applicant.applied_to - 1 },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  const job = await Job.findById(job_id).catch((err) =>
+    res.status(404).json(err)
+  );
+  const newApplied = job.applied.filter(
+    (app) => app !== application.applicant_id
+  );
+  await Job.findOneAndUpdate(
+    { _id: application.job_id },
+    {
+      $set: { applied: newApplied },
     }
   ).catch((err) => res.status(404).json(err));
 

@@ -93,7 +93,7 @@ const ApplicantListing = (props) => {
         app._id === application._id
           ? {
               ...app,
-              stage: "shortlisted",
+              stage: "Shortlisted",
             }
           : app
       )
@@ -104,6 +104,40 @@ const ApplicantListing = (props) => {
       null,
       { headers: { "x-auth-token": userData.token } }
     ).catch((err) => console.log(err));
+  };
+
+  const acceptApplicant = (application) => {
+    setDisplayList((curList) =>
+      curList.map((app) =>
+        app._id === application._id
+          ? {
+              ...app,
+              stage: "Accepted",
+            }
+          : app
+      )
+    );
+
+    Axios.put("http://localhost:5000/api/application/accept", application, {
+      headers: { "x-auth-token": userData.token },
+    }).catch((err) => console.log(err));
+  };
+
+  const rejectApplicant = (application) => {
+    setDisplayList((curList) =>
+      curList.map((app) =>
+        app._id === application._id
+          ? {
+              ...app,
+              stage: "Rejected",
+            }
+          : app
+      )
+    );
+
+    Axios.put("http://localhost:5000/api/application/reject", application, {
+      headers: { "x-auth-token": userData.token },
+    }).catch((err) => console.log(err));
   };
 
   return (
@@ -174,6 +208,8 @@ const ApplicantListing = (props) => {
                   <ApplicationRec
                     application={application}
                     shortlistApplicant={shortlistApplicant}
+                    acceptApplicant={acceptApplicant}
+                    rejectApplicant={rejectApplicant}
                   />
                 );
               })}

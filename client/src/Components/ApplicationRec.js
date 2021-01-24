@@ -1,13 +1,16 @@
-import { useContext, useState, useEffect } from "react";
-import Axios from "axios";
 import generate from "shortid";
 
 const ApplicationRec = (props) => {
-  const { application, shortlistApplicant } = props;
+  const {
+    application,
+    shortlistApplicant,
+    acceptApplicant,
+    rejectApplicant,
+  } = props;
 
   return (
     <div key={application._id}>
-      {application.stage !== "rejected" ? (
+      {application.stage !== "Rejected" && application.stage !== "Accepted" ? (
         <div>
           <div className="card mb-3">
             <div className="card-body">
@@ -98,7 +101,7 @@ const ApplicationRec = (props) => {
                   </p>
                 </div>
                 <div className="col-3">
-                  {application.stage === "applied" ? (
+                  {application.stage === "Applied" ? (
                     <button
                       type="button"
                       class="btn btn-outline-info mr-3 mt-2"
@@ -112,11 +115,18 @@ const ApplicationRec = (props) => {
                     <button
                       type="button"
                       class="btn btn-outline-info mr-3 mt-2"
+                      onClick={() => {
+                        acceptApplicant(application);
+                      }}
                     >
                       Accept
                     </button>
                   )}
-                  <button type="button" class="btn btn-outline-danger mt-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger mt-2"
+                    onClick={() => rejectApplicant(application)}
+                  >
                     Reject
                   </button>
                 </div>
