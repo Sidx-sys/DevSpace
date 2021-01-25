@@ -103,4 +103,14 @@ router.delete("/:id", auth, async (req, res) => {
   res.json(true);
 });
 
+// @route GET api/job/info/:id
+// @desc get a specific job's details
+// @access Private
+router.get("/info/:id", auth, async (req, res) => {
+  const _id = req.params.id;
+  const job = await Job.findById(_id).catch((err) => res.status(404).json(err));
+
+  res.json(job);
+});
+
 module.exports = router;

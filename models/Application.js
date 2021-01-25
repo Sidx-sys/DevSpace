@@ -30,6 +30,13 @@ const ApplicationSchema = new mongoose.Schema({
     type: String,
     default: "Applied",
   },
+  date_of_join: {
+    type: String,
+  },
+  rated: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = Application = mongoose.model(

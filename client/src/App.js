@@ -12,6 +12,7 @@ import UserContext from "./Context/UserContext";
 import CreateJob from "./Components/CreateJob";
 import ApplicantList from "./Components/JobListing/ApplicantList";
 import RecruiterList from "./Components/JobListing/RecruiterList";
+import MyApplications from "./Components/MyApplications";
 
 const App = () => {
   const [userData, setUserData] = useState({
@@ -66,6 +67,7 @@ const App = () => {
             <Route path="/createJob" component={CreateJob} />
             <Route path="/app/jobList" component={ApplicantList} />
             <Route path="/rec/jobList" component={RecruiterList} />
+            <Route path="/myapplications" component={MyApplications} />
           </div>
         </UserContext.Provider>
       </BrowserRouter>

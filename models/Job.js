@@ -55,7 +55,7 @@ const JobSchema = new mongoose.Schema({
   },
   rating: {
     type: Array,
-    default: [0],
+    default: [],
   },
   selected: {
     type: Array,

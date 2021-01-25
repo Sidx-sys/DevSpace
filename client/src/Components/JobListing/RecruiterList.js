@@ -55,7 +55,7 @@ const RecruiterList = () => {
         <ApplicantListing job={selectedJob} setSelectedJob={setSelectedJob} />
       ) : (
         <div>
-          <h1 className="display-4 text-center mb-3 mb-2">Jobs Listed</h1>
+          <h1 className="display-4 text-center mb-3 ">Jobs Listed</h1>
           {isLoading ? (
             <PreLoader />
           ) : jobs.length ? (

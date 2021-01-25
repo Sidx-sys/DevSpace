@@ -5,6 +5,7 @@ const auth = require("../../middleware/auth");
 const Application = require("../../models/Application");
 const JobApplicant = require("../../models/Job_Applicants");
 const Job = require("../../models/Job");
+const { join } = require("path");
 
 // @route api/application
 // @desc add an application
@@ -102,13 +103,17 @@ router.put("/accept", auth, async (req, res) => {
   try {
     const application = req.body;
     const _id = application._id;
+    const join_date = application.date_of_joining;
 
     await Application.findOneAndUpdate(
       { _id },
       {
-        $set: { stage: "Accepted" },
+        $set: {
+          date_of_join: join_date,
+          stage: "Accepted",
+        },
       }
-    );
+    ).exec();
 
     const job_id = application.job_id;
     const applicant_id = application.applicant_id;
@@ -139,7 +144,7 @@ router.put("/accept", auth, async (req, res) => {
 
     for (let id = 0; id < allApp.length; id++) {
       const a = allApp[id];
-      if (a.stage === "Accepted") continue;
+      if (a.stage === "Accepted" || a.stage === "Rejected") continue;
 
       await Application.findOneAndUpdate(
         { _id: a._id },
@@ -185,6 +190,21 @@ router.put("/reject", auth, async (req, res) => {
     { _id: application.applicant_id },
     {
       $set: { applied_to: applicant.applied_to - 1 },
+    }
+  ).catch((err) => res.status(404).json(err));
+
+  res.json(true);
+});
+
+// @route PUT api/application/rated
+// @desc Update the application stage to rejected,
+// @access private
+router.put("/rated/:id", auth, async (req, res) => {
+  const _id = req.params.id;
+  await Application.findOneAndUpdate(
+    { _id },
+    {
+      $set: { rated: true },
     }
   ).catch((err) => res.status(404).json(err));
 

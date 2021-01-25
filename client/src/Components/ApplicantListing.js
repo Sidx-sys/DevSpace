@@ -117,10 +117,18 @@ const ApplicantListing = (props) => {
           : app
       )
     );
+    const applicationWithDOJ = {
+      ...application,
+      date_of_joining: moment().format("DD-MM-YYYY"),
+    };
 
-    Axios.put("http://localhost:5000/api/application/accept", application, {
-      headers: { "x-auth-token": userData.token },
-    }).catch((err) => console.log(err));
+    Axios.put(
+      "http://localhost:5000/api/application/accept",
+      applicationWithDOJ,
+      {
+        headers: { "x-auth-token": userData.token },
+      }
+    ).catch((err) => console.log(err));
   };
 
   const rejectApplicant = (application) => {

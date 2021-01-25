@@ -35,9 +35,13 @@ const ApplicantList = () => {
   };
 
   const sortRating = (a, b) => {
-    return order === "Ascending"
-      ? a.rating[0] - b.rating[0]
-      : b.rating[0] - a.rating[0];
+    const left = a.rating.length
+      ? a.rating.reduce((l, r) => l + r) / a.rating.length
+      : 0;
+    const right = b.rating.length
+      ? b.rating.reduce((l, r) => l + r) / b.rating.length
+      : 0;
+    return order === "Ascending" ? left - right : right - left;
   };
 
   useEffect(() => {
@@ -315,7 +319,11 @@ const ApplicantList = () => {
 
                         <div className="col-3">
                           <p className="lead">
-                            <strong>Rating:</strong> {job.rating[0]}
+                            <strong>Rating:</strong>{" "}
+                            {job.rating.length
+                              ? job.rating.reduce((a, b) => a + b) /
+                                job.rating.length
+                              : "Not Rated Yet"}
                           </p>
                         </div>
 
