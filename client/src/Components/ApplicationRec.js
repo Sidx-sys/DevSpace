@@ -55,10 +55,10 @@ const ApplicationRec = (props) => {
                 </div>
 
                 <div className="col">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">SOP</h5>
-                      <p class="card-text">{application.sop}</p>
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">SOP</h5>
+                      <p className="card-text">{application.sop}</p>
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ const ApplicationRec = (props) => {
                   {application.stage === "Applied" ? (
                     <button
                       type="button"
-                      class="btn btn-outline-info mr-3 mt-2"
+                      className="btn btn-outline-info mr-3 mt-2"
                       onClick={() => {
                         shortlistApplicant(application);
                       }}
@@ -114,7 +114,7 @@ const ApplicationRec = (props) => {
                   ) : (
                     <button
                       type="button"
-                      class="btn btn-outline-info mr-3 mt-2"
+                      className="btn btn-outline-info mr-3 mt-2"
                       onClick={() => {
                         acceptApplicant(application);
                       }}
@@ -124,7 +124,7 @@ const ApplicationRec = (props) => {
                   )}
                   <button
                     type="button"
-                    class="btn btn-outline-danger mt-2"
+                    className="btn btn-outline-danger mt-2"
                     onClick={() => rejectApplicant(application)}
                   >
                     Reject

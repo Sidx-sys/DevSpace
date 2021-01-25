@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 const ModalExample = (props) => {
-  const { setSop, applyJob, job_id, recruiter_id } = props;
+  const { sop, setSop, applyJob, job_id, recruiter_id } = props;
 
   const [modal, setModal] = useState(false);
   const [error, setError] = useState();
@@ -36,15 +36,8 @@ const ModalExample = (props) => {
             style={{ height: "12rem" }}
             onChange={(e) => {
               const text = e.target.value;
-              const sopLength = text.split(" ").length;
-              if (sopLength <= 5 || text.length === 0) {
-                setError("You have to write atleast 5 words");
-              } else if (sopLength > 250) {
-                setError("SOP exceeded word limit of 250");
-              } else {
-                setError(null);
-                setSop(text);
-              }
+              setSop(text);
+              setError(null);
             }}
           ></textarea>
         </ModalBody>
@@ -63,8 +56,18 @@ const ModalExample = (props) => {
             <Button
               color="primary"
               onClick={() => {
-                applyJob(job_id, recruiter_id);
-                toggle();
+                if (sop === null) setError("Empty SOP is not allowed");
+                else {
+                  const sopLength = sop.split(" ").length;
+                  if (sopLength <= 5) {
+                    setError("You have to write atleast 5 words");
+                  } else if (sopLength > 250) {
+                    setError("SOP exceeded word limit of 250");
+                  } else {
+                    applyJob(job_id, recruiter_id);
+                    toggle();
+                  }
+                }
               }}
             >
               Confirm SOP and Apply

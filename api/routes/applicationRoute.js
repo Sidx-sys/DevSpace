@@ -29,7 +29,6 @@ router.post("/", auth, async (req, res) => {
     }
   ).catch((err) => res.status(404).json(err));
 
-  applied.push(applicant_id);
   await Job.findOneAndUpdate(
     { _id: job_id },
     {
@@ -50,20 +49,6 @@ router.get("/app/:id", auth, async (req, res) => {
   const applications = await Application.find({ applicant_id }).catch((err) =>
     res.status(404).json(err)
   );
-  res.json(applications);
-});
-
-// @route GET api/application/app/:id
-// @desc To get all applications of an applicant
-// @access private
-
-router.get("/app/:id", auth, async (req, res) => {
-  const applicant_id = req.params.id;
-
-  const applications = await Application.find({ applicant_id }).catch((err) =>
-    res.status(404).json(err)
-  );
-
   res.json(applications);
 });
 
@@ -173,7 +158,7 @@ router.put("/reject", auth, async (req, res) => {
     }
   ).catch((err) => res.status(404).json(err));
 
-  const job = await Job.findById(job_id).catch((err) =>
+  const job = await Job.findById(application.job_id).catch((err) =>
     res.status(404).json(err)
   );
   const newApplied = job.applied.filter(

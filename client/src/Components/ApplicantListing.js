@@ -7,7 +7,7 @@ import moment from "moment";
 import UserContext from "../Context/UserContext";
 
 const ApplicantListing = (props) => {
-  const { job, setSelectedJob } = props;
+  const { job, setSelectedJob, jobs, setJobs } = props;
   const { userData } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [appList, setAppList] = useState();
@@ -132,6 +132,19 @@ const ApplicantListing = (props) => {
               stage: "Rejected",
             }
           : app
+      )
+    );
+
+    setJobs((curJobs) =>
+      curJobs.map((job) =>
+        job._id === application.job_id
+          ? {
+              ...job,
+              applied: job.applied.filter(
+                (app_id) => app_id !== application.applicant_id
+              ),
+            }
+          : job
       )
     );
 

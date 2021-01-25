@@ -212,7 +212,7 @@ const CreateJob = () => {
         <div className="form-group">
           <label htmlFor="duration">Duration</label>
           <select
-            class="form-control"
+            className="form-control"
             id="duration"
             onChange={(e) => setDuration(e.target.value)}
             aria-describedby="durationHelp"

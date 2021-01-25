@@ -4,6 +4,8 @@ const auth = require("../../middleware/auth");
 
 const Job = require("../../models/Job");
 const JobApplicant = require("../../models/Job_Applicants");
+const Application = require("../../models/Application");
+const { application } = require("express");
 
 // @route POST api/job/
 // @desc Add a job listing
@@ -69,8 +71,18 @@ router.delete("/:id", auth, async (req, res) => {
     res.status(404).json(err)
   );
 
-  job.applied.forEach(async (app_id) => {
-    const applicant = await JobApplicant.findOne({ _id: app_id });
+  //delete all the applications
+  await Application.deleteMany({ job_id }).catch((err) =>
+    res.status(404).json(err)
+  );
+
+  for (let id = 0; id < job.applied.length; id++) {
+    const app_id = job.applied[id];
+
+    const applicant = await JobApplicant.findOne({ _id: app_id }).catch((err) =>
+      res.status(404).json(err)
+    );
+
     await JobApplicant.findOneAndUpdate(
       { _id: app_id },
       {
@@ -79,15 +91,17 @@ router.delete("/:id", auth, async (req, res) => {
     ).catch((err) => res.status(404).json(err));
 
     // if applicant was employed at this job
-    if (job.selected.includes(applicant.gotJob)) {
+    if (job.selected.includes(app_id)) {
       await JobApplicant.findOneAndUpdate(
         { _id: app_id },
         {
-          $set: { got_job: null },
+          $set: { got_job: "" },
         }
       ).catch((err) => res.status(404).json(err));
     }
-  });
+  }
+
+  res.json(true);
 });
 
 module.exports = router;

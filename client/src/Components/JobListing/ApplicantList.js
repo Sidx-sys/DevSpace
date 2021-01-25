@@ -271,82 +271,89 @@ const ApplicantList = () => {
           </div>
           {displayJobs.map((job) => {
             return (
-              <div className="card mb-3" key={job._id}>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col">
-                      <p className="h3 text-left">{job.title}</p>
-                    </div>
-                    <div className="col">
-                      <p className="h4 text-right">
-                        Recruiter: {job.recruiter_name}
-                      </p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="row justify-content-center">
-                    <div className="col-3">
-                      <p className="lead">
-                        <strong>Salary Per Month:</strong> {job.spm}
-                      </p>
-                    </div>
-
-                    <div className="col-3">
-                      <p className="lead">
-                        <strong>Duration:</strong> {job.duration}
-                      </p>
-                    </div>
-
-                    <div className="col-3">
-                      <p className="lead">
-                        <strong>Job Type:</strong> {job.job_type}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="row justify-content-center">
-                    <div className="col-3">
-                      <p className="lead">
-                        <strong>Deadline:</strong> {job.deadline_date}
-                      </p>
-                    </div>
-
-                    <div className="col-3">
-                      <p className="lead">
-                        <strong>Rating:</strong> {job.rating[0]}
-                      </p>
-                    </div>
-
-                    <div className="col-3">
-                      {job.applied.includes(userData.user?.id) ? (
-                        <button
-                          type="button"
-                          className="btn btn-success"
-                          disabled
-                        >
-                          Applied
-                        </button>
-                      ) : job.applied.length === job.app_limit ? (
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary"
-                          disabled
-                        >
-                          Full
-                        </button>
-                      ) : (
-                        <div>
-                          <ModalExample
-                            setSop={setSop}
-                            applyJob={applyJob}
-                            job_id={job._id}
-                            recruiter_id={job.recruiter_id}
-                          />
+              <div>
+                {moment(job.deadline_date) >= moment(Date.now()) ? (
+                  <div className="card mb-3" key={job._id}>
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col">
+                          <p className="h3 text-left">{job.title}</p>
                         </div>
-                      )}
+                        <div className="col">
+                          <p className="h4 text-right">
+                            Recruiter: {job.recruiter_name}
+                          </p>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="row justify-content-center">
+                        <div className="col-3">
+                          <p className="lead">
+                            <strong>Salary Per Month:</strong> {job.spm}
+                          </p>
+                        </div>
+
+                        <div className="col-3">
+                          <p className="lead">
+                            <strong>Duration:</strong> {job.duration}
+                          </p>
+                        </div>
+
+                        <div className="col-3">
+                          <p className="lead">
+                            <strong>Job Type:</strong> {job.job_type}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="row justify-content-center">
+                        <div className="col-3">
+                          <p className="lead">
+                            <strong>Deadline:</strong> {job.deadline_date}
+                          </p>
+                        </div>
+
+                        <div className="col-3">
+                          <p className="lead">
+                            <strong>Rating:</strong> {job.rating[0]}
+                          </p>
+                        </div>
+
+                        <div className="col-3">
+                          {job.applied.includes(userData.user?.id) ? (
+                            <button
+                              type="button"
+                              className="btn btn-success"
+                              disabled
+                            >
+                              Applied
+                            </button>
+                          ) : job.applied.length === job.app_limit ? (
+                            <button
+                              type="button"
+                              className="btn btn-outline-primary"
+                              disabled
+                            >
+                              Full
+                            </button>
+                          ) : (
+                            <div>
+                              <ModalExample
+                                sop={sop}
+                                setSop={setSop}
+                                applyJob={applyJob}
+                                job_id={job._id}
+                                recruiter_id={job.recruiter_id}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <></>
+                )}
               </div>
             );
           })}

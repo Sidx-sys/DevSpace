@@ -20,7 +20,7 @@ const RecruiterList = () => {
       if (token === null || token === "") history.push("/");
       else {
         const job_list = await Axios.get(
-          `http://localhost:5000/api/job/rec/${userData.user.id}`,
+          `http://localhost:5000/api/job/rec/${userData?.user.id}`,
           {
             headers: { "x-auth-token": token },
           }
@@ -52,7 +52,12 @@ const RecruiterList = () => {
   return (
     <div className="container">
       {selectedJob !== null ? (
-        <ApplicantListing job={selectedJob} setSelectedJob={setSelectedJob} />
+        <ApplicantListing
+          job={selectedJob}
+          setSelectedJob={setSelectedJob}
+          jobs={jobs}
+          setJobs={setJobs}
+        />
       ) : (
         <div>
           <h1 className="display-4 text-center mb-3 mb-2">Jobs Listed</h1>
