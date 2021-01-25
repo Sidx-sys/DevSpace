@@ -52,12 +52,7 @@ const RecruiterList = () => {
   return (
     <div className="container">
       {selectedJob !== null ? (
-        <ApplicantListing
-          job={selectedJob}
-          setSelectedJob={setSelectedJob}
-          jobs={jobs}
-          setJobs={setJobs}
-        />
+        <ApplicantListing job={selectedJob} setSelectedJob={setSelectedJob} />
       ) : (
         <div>
           <h1 className="display-4 text-center mb-3 mb-2">Jobs Listed</h1>
