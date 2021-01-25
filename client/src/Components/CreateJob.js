@@ -237,6 +237,7 @@ const CreateJob = () => {
             className="form-control"
             id="spm"
             placeholder="30000"
+            min="0"
             required
             onChange={(e) => setSpm(e.target.value)}
           />

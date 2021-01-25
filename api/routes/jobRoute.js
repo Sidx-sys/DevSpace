@@ -5,7 +5,6 @@ const auth = require("../../middleware/auth");
 const Job = require("../../models/Job");
 const JobApplicant = require("../../models/Job_Applicants");
 const Application = require("../../models/Application");
-const { application } = require("express");
 
 // @route POST api/job/
 // @desc Add a job listing
