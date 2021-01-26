@@ -5,7 +5,6 @@ const auth = require("../../middleware/auth");
 const Application = require("../../models/Application");
 const JobApplicant = require("../../models/Job_Applicants");
 const Job = require("../../models/Job");
-const { join } = require("path");
 
 // @route api/application
 // @desc add an application
@@ -43,7 +42,6 @@ router.post("/", auth, async (req, res) => {
 // @route GET api/application/app/:id
 // @desc To get all applications of an applicant
 // @access private
-
 router.get("/app/:id", auth, async (req, res) => {
   const applicant_id = req.params.id;
 
@@ -56,7 +54,6 @@ router.get("/app/:id", auth, async (req, res) => {
 // @route GET api/application/rec/:id
 // @desc To get all applications given to a recruiter of a particular job listing
 // @access private
-
 router.get("/rec/:id", auth, async (req, res) => {
   const job_id = req.params.id;
 
@@ -209,6 +206,47 @@ router.put("/rated/:id", auth, async (req, res) => {
   ).catch((err) => res.status(404).json(err));
 
   res.json(true);
+});
+
+// @route GET api/application/rec/accept/:id
+// @desc To get all applications of a recruiter
+// @access private
+router.get("/rec/accept/:id", auth, async (req, res) => {
+  const recruiter_id = req.params.id;
+
+  const applications = await Application.find({ recruiter_id }).catch((err) =>
+    res.status(404).json(err)
+  );
+
+  const accApplications = applications.filter(
+    (app) => app.stage === "Accepted"
+  );
+
+  const accApplicationsWithJob = await Promise.all(
+    accApplications.map(async (app) => {
+      const job = await Job.findById(app.job_id).select("-password");
+
+      return {
+        ...job._doc,
+        ...app._doc,
+      };
+    })
+  );
+
+  const accApplicationJobWithUser = await Promise.all(
+    accApplicationsWithJob.map(async (app) => {
+      const user = await JobApplicant.findById(app.applicant_id).select(
+        "-password"
+      );
+
+      return {
+        ...app,
+        rating: user._doc.rating,
+      };
+    })
+  );
+
+  res.json(accApplicationJobWithUser);
 });
 
 module.exports = router;

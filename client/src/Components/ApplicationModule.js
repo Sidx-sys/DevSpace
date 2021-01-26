@@ -25,6 +25,7 @@ const ApplicationModule = (props) => {
     };
     loadJob();
   }, []);
+
   const submit = async () => {
     let rating = job.rating;
     rating.push(jRating);

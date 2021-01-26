@@ -65,4 +65,28 @@ router.put("/recruiter/:id", auth, (req, res) => {
     .catch((err) => res.status(404).json(err));
 });
 
+// @route PUT api/profile/rating/:id
+// @desc Update applicant info
+// @access private
+router.put("/rating/:id", auth, async (req, res) => {
+  const { rating, app_id } = req.body;
+  const _id = req.params.id;
+
+  await JobApplicant.findOneAndUpdate(
+    { _id },
+    {
+      $set: { rating },
+    }
+  );
+
+  await Application.findOneAndUpdate(
+    { _id: app_id },
+    {
+      $set: { rated_app: true },
+    }
+  );
+
+  res.json(true);
+});
+
 module.exports = router;

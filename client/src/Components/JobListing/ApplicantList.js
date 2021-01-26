@@ -336,10 +336,11 @@ const ApplicantList = () => {
                             >
                               Applied
                             </button>
-                          ) : job.applied.length === job.app_limit ? (
+                          ) : job.applied.length === job.app_limit ||
+                            job.selected.length === job.job_limit ? (
                             <button
                               type="button"
-                              className="btn btn-outline-primary"
+                              className="btn btn-warning"
                               disabled
                             >
                               Full

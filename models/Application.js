@@ -37,6 +37,10 @@ const ApplicationSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  rated_app: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = Application = mongoose.model(
