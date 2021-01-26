@@ -97,10 +97,13 @@ const ApplicationModule = (props) => {
               </div>
 
               <div className="col-4">
-                {app.stage !== "Accepted" || app.rated ? (
+                {app.stage !== "Accepted" || app?.rated ? (
                   <p className="lead">
                     <strong>Rating: </strong>{" "}
-                    {job.rating.reduce((a, b) => a + b) / job.rating.length}
+                    {job.rating.length
+                      ? job.rating.reduce((a, b) => Number(a) + Number(b)) /
+                        job.rating.length
+                      : "Not rated yet"}
                   </p>
                 ) : !toRate ? (
                   <p className="lead">

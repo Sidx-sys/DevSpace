@@ -1,10 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
+const config = require("config");
+const nodemailer = require("nodemailer");
 
 const Application = require("../../models/Application");
 const JobApplicant = require("../../models/Job_Applicants");
 const Job = require("../../models/Job");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  auth: {
+    user: config.get("EMAIL_ID"),
+    pass: config.get("EMAIL_PASS"),
+  },
+});
 
 // @route api/application
 // @desc add an application
@@ -161,9 +172,19 @@ router.put("/accept", auth, async (req, res) => {
       );
     }
 
-    res.json(true);
+    const mailOptions = {
+      from: "devspacenotifs@gmail.com",
+      to: application.email,
+      subject: `Application Accepted for ${job.title} !`,
+      html: `Congratulations ${application.applicant_name}! <br/> Your job application for the job posting of <strong>${job.title}</strong> has been accepted.`,
+    };
+
+    const res = await transporter.sendMail(mailOptions);
+    console.log(res);
+
+    return res.json(true);
   } catch (err) {
-    res.status(404).json(err);
+    return res.status(404).json(err);
   }
 });
 

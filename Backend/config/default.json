@@ -1,4 +1,6 @@
 {
     "MongoURI": "mongodb+srv://dbAdmin:test123@cluster0.egqw3.mongodb.net/portal?retryWrites=true&w=majority",
-    "jwtSecret": "letthesecret"
+    "jwtSecret": "letthesecret",
+    "EMAIL_ID": "devspacenotifs@gmail.com",
+    "EMAIL_PASS": "1234Test"
 }

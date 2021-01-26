@@ -19,7 +19,7 @@ const MyApplications = () => {
       if (token === null || token === "") history.push("/");
       else {
         const app_list = await Axios.get(
-          `http://localhost:5000/api/application/app/${userData?.user.id}`,
+          `http://localhost:5000/api/application/app/${userData?.user?.id}`,
           {
             headers: { "x-auth-token": token },
           }

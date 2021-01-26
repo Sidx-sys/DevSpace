@@ -43,7 +43,12 @@ const ProfileApp = () => {
         <div className="col-4 border-bottom">
           <p className="h4">Rating</p>
           {userData.user.rating.length ? (
-            <div></div>
+            <div>
+              <p className="h3 lead">
+                {userData.user.rating.reduce((a, b) => Number(a) + Number(b)) /
+                  userData.user.rating.length}
+              </p>
+            </div>
           ) : (
             <p className="lead">Not rated yet</p>
           )}

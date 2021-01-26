@@ -95,8 +95,9 @@ const ApplicationRec = (props) => {
                   <p className="h5 ">Rating</p>
                   <p className="lead">
                     {application.rating.length
-                      ? application.rating.reduce((a, b) => a + b) /
-                        application.rating.length
+                      ? application.rating.reduce(
+                          (a, b) => Number(a) + Number(b)
+                        ) / application.rating.length
                       : "Not Rated Yet"}
                   </p>
                 </div>

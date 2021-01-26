@@ -59,7 +59,7 @@ const RecruitModule = (props) => {
             </div>
 
             <div className="col-3">
-              {app.rated_app ? (
+              {app?.rated_app ? (
                 <p className="lead">
                   <strong>Rating: </strong>{" "}
                   {app.rating.reduce((a, b) => Number(a) + Number(b)) /

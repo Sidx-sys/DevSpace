@@ -36,10 +36,10 @@ const ApplicantList = () => {
 
   const sortRating = (a, b) => {
     const left = a.rating.length
-      ? a.rating.reduce((l, r) => l + r) / a.rating.length
+      ? a.rating.reduce((l, r) => Number(l) + Number(r)) / a.rating.length
       : 0;
     const right = b.rating.length
-      ? b.rating.reduce((l, r) => l + r) / b.rating.length
+      ? b.rating.reduce((l, r) => Number(l) + Number(r)) / b.rating.length
       : 0;
     return order === "Ascending" ? left - right : right - left;
   };
@@ -321,8 +321,9 @@ const ApplicantList = () => {
                           <p className="lead">
                             <strong>Rating:</strong>{" "}
                             {job.rating.length
-                              ? job.rating.reduce((a, b) => a + b) /
-                                job.rating.length
+                              ? job.rating.reduce(
+                                  (a, b) => Number(a) + Number(b)
+                                ) / job.rating.length
                               : "Not Rated Yet"}
                           </p>
                         </div>
