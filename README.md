@@ -5,18 +5,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
-''' 
+
+- To run the backend
+```
 cd backend
 npm install
 npm start 
-''' (to run the backend)
+``` 
 
-''' 
-
+- To run the frontend
+```
 cd frontend
 npm install
 npm start 
-''' (to run the frontend)
+```
 
 
 
