@@ -1,7 +1,8 @@
-# Getting Started with Create React App
+# DevSpace
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-A Job portal website built to handle the needs of both the recruiter as well as the applicants. Implemented using the MERN stack and React's Context API and Hooks
+
+A Job portal website built to handle the needs of both the recruiter as well as the applicants. Implemented from scratch using the MERN stack and React's Context API and Hooks
 
 ## Available Scripts
 
